@@ -1,0 +1,2 @@
+First sample file used to test a multiple-file upload.
+Expected content: the upload control should accept this text file.

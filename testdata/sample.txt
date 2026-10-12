@@ -1,0 +1,2 @@
+Sample file used to test a single-file upload.
+Expected content: the upload control should accept this text file.
