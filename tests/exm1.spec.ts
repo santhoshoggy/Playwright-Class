@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 
-test.only('verifies the page title and header', async ({ page }) => {
+test('verifies the page title and header', async ({ page }) => {
 
 
   await expect(page).toHaveTitle('Automation Testing Practice');
@@ -239,4 +239,91 @@ test('drags an item into the drop target', async ({ page }) => {
   await expect(dropTarget).toContainText('Dropped!');
   await page.waitForTimeout(3000);
 
+});
+
+test('demonstrates page, element, and soft assertions', async ({ page }) => {
+  // Page assertions verify the loaded page's title and URL.
+  await expect(page).toHaveTitle('Automation Testing Practice');
+  await expect(page).toHaveURL(practiceSite);
+
+  // Element assertions verify the heading's visibility and text.
+  const heading = page.locator('h1');
+  await expect(heading).toBeVisible();
+  await expect(heading).toHaveText('Automation Testing Practice');
+
+  // Soft assertions report failures while allowing the remaining checks to run.
+  const nameInput = page.getByPlaceholder('Enter Name');
+  await nameInput.fill('Alex Morgan');
+  await expect.soft(nameInput).toBeVisible();
+  await expect.soft(nameInput).toHaveAttribute('placeholder', 'Enter Name');
+  await expect.soft(nameInput).toHaveValue('Alex Morgan');
+});
+test('demonstrates element and visual assertions', async ({ page }) => {
+  const emailInput = page.getByPlaceholder('Enter EMail');
+  const searchInput = page.locator('#Wikipedia1_wikipedia-search-input');
+  const submitButton = page.locator('#Blog1 .submit-btn');
+
+  // Visibility and DOM attachment
+  await expect(page.locator('#Blog1')).toBeVisible();
+  await expect(page.locator('#PageList2 h2')).not.toBeVisible();
+  await expect(page.locator('#Wikipedia1_wikipedia-search-results-header')).toBeHidden();
+  await expect(page.locator('#Blog1')).toBeAttached();
+
+  // Text content
+  await expect(page.locator('h1')).toHaveText('Automation Testing Practice');
+  await expect(page.locator('#Blog1')).toContainText('Data Entry Form');
+  await expect(page.locator('h1')).toHaveText(/automation testing practice/i);
+
+  // Attributes and input values
+  await expect(emailInput).toHaveAttribute('type', 'text');
+  await expect(emailInput).toHaveAttribute('placeholder', 'Enter EMail');
+
+  await emailInput.fill('alex@example.com');
+  await expect(emailInput).toHaveValue('alex@example.com');
+
+  await expect(searchInput).toBeEmpty();
+  await searchInput.fill('Playwright');
+  await expect(searchInput).toHaveValue(/playwright/i);
+
+
+  // Count, class, CSS, enabled state, and checked state
+  await expect(page.locator('#HTML1 table tbody tr')).toHaveCount(7); // Verify there are 7 rows in the table
+  await expect(page.locator('#name')).toHaveClass(/form-control/);
+  await expect(page.locator('#email')).not.toHaveClass(/disabled/);
+  
+  await expect(page.locator('#name')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  
+  await expect(submitButton).toBeEnabled();
+  await expect(submitButton).not.toBeDisabled();
+  await page.getByLabel('Monday').check();
+  await expect(page.getByLabel('Monday')).toBeChecked();
+  await expect(page.getByLabel('Sunday')).not.toBeChecked();
+
+  // Focus and empty value
+  await emailInput.focus();
+  await expect(emailInput).toBeFocused();
+  await page.waitForTimeout(3000);
+  await searchInput.clear();
+  await expect(searchInput).toBeEmpty();
+
+
+ //screenshot and visual comparison
+  await page.screenshot({path: 'screenshots/visual_assertions.png', fullPage: true});
+  await expect(page.locator('#Blog1')).toHaveScreenshot('screenshots/blog1_expected.png');
+
+  
+});
+
+test.only('demonstrates soft assertions', async ({ page }) => {
+  const nameInput = page.getByPlaceholder('Enter Name');
+  const emailInput = page.getByPlaceholder('Enter EMail');
+
+  await nameInput.fill('Alex Morgan');
+  await emailInput.fill('alex@example.com');
+
+  // Soft assertions collect failures but continue through the remaining checks.
+  await expect.soft(nameInput).toHaveValue('Alex Morgan'); //error: missing space
+  await expect.soft(emailInput).toHaveValue('alex@example.com');
+  await expect.soft(page.locator('#Blog1 h3')).toContainText('Data Entry Form');
+  await expect.soft(nameInput).toBeVisible();
 });
