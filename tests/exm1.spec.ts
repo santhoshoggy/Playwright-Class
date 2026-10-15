@@ -216,6 +216,7 @@ test('selects a single file for upload', async ({ page }) => {
   const fileInput = page.locator('#singleFileInput');
 
   await fileInput.setInputFiles('testdata/sample.txt');
+  await page.waitForLoadState('domcontentloaded');
   await page.waitForTimeout(3000);
 
   const multipleFileInput = page.locator('#multipleFilesInput');
@@ -310,11 +311,10 @@ test('demonstrates element and visual assertions', async ({ page }) => {
  //screenshot and visual comparison
   await page.screenshot({path: 'screenshots/visual_assertions.png', fullPage: true});
   await expect(page.locator('#Blog1')).toHaveScreenshot('screenshots/blog1_expected.png');
-
   
 });
 
-test.only('demonstrates soft assertions', async ({ page }) => {
+test('demonstrates soft assertions', async ({ page }) => {
   const nameInput = page.getByPlaceholder('Enter Name');
   const emailInput = page.getByPlaceholder('Enter EMail');
 
@@ -326,4 +326,58 @@ test.only('demonstrates soft assertions', async ({ page }) => {
   await expect.soft(emailInput).toHaveValue('alex@example.com');
   await expect.soft(page.locator('#Blog1 h3')).toContainText('Data Entry Form');
   await expect.soft(nameInput).toBeVisible();
+});
+
+test('demonstrates auto-wait, explicit wait, and custom polling', async ({ page }) => {
+  const toggleButton = page.locator('button[name="start"], button[name="stop"]');
+
+  // Explicitly wait until the START button is visible.
+  await page.waitForSelector('button[name="start"]', { state: 'visible' });
+
+  // The click auto-waits until the button is ready for interaction.
+  await toggleButton.click();
+
+  // Custom polling waits until the button changes to STOP.
+  await expect.poll(() => toggleButton.getAttribute('name')).toBe('stop');
+  await expect(toggleButton).toHaveText('STOP');
+
+
+
+  // await page.locator().waitFor({ state: 'visible', timeout: 5000 });
+  await page.waitForLoadState('networkidle'); //
+  await page.waitForFunction(() => document.querySelector('#Blog1') !== null);
+  await page.waitForResponse(response => response.url().includes('testautomationpractice') && response.status() === 200);
+  await page.waitForEvent('load');
+  await page.waitForLoadState('domcontentloaded');
+  await page.waitForTimeout(3000);
+});
+
+test('custom polling example: waits for a specific text to appear', async ({ page }) => {
+ 
+  await expect(async () => {
+    
+  const count = await page.locator(".item").count(); //6
+  expect(count).toBeGreaterThan(5);
+
+}).toPass({ timeout: 10_000 });
+
+
+await expect(async () => {
+  const text = await page.locator("#widget-content").textContent();  // 
+  expect(text).toBe("Blog");
+}).toPass({
+  intervals: [1000, 2000, 5000], // retry intervals in ms
+  timeout: 30_000
+});
+
+
+});
+
+test('reads text inside an iframe', async ({ page }) => {
+  await page.setContent(`
+    <iframe id="my-frame" srcdoc="<h1>Hello from the iframe</h1>"></iframe>
+  `);
+
+  const iframe = page.frameLocator('#my-frame');
+  await expect(iframe.getByRole('heading')).toHaveText('Hello from the iframe');
 });
