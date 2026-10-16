@@ -56,7 +56,7 @@ test('opens the New Tab button in a new tab', async ({ page }) => {
   await page.getByRole('button', { name: 'New Tab' }).click();
 
   const newTab = await newTabPromise;
-await newTab.waitForLoadState();
+  await newTab.waitForLoadState();
   await expect(newTab).toHaveURL('https://www.pavantestingtools.com/');
   
   await newTab.waitForTimeout(2000);

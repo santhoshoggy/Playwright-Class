@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { LoginPage } from '../pages/login';
 
 // URL of the practice page used by every test.
 const practiceSite = 'https://testautomationpractice.blogspot.com/';
@@ -6,7 +7,10 @@ const practiceSite = 'https://testautomationpractice.blogspot.com/';
 test.beforeEach(async ({ page }) => {
   // Open a fresh practice page before each test.
   await page.goto(practiceSite);
+
 });
+
+
 
 
 test('verifies the page title and header', async ({ page }) => {
