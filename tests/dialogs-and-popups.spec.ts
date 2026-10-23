@@ -2,6 +2,8 @@ import { expect, test, type Page } from '@playwright/test';
 
 const practiceSite = 'https://testautomationpractice.blogspot.com/';
 
+
+test.describe('Dialogs and Popups', () => {
 test('handles the simple alert', async ({ page }) => {
   await page.goto(practiceSite);
 
@@ -31,6 +33,9 @@ test('accepts the confirmation alert', async ({ page }) => {
   await page.waitForTimeout(2000);
 });
 
+});
+
+
 test('submits a name in the prompt alert', async ({ page }) => {
   await page.goto(practiceSite);
 
@@ -59,7 +64,6 @@ test('opens the New Tab button in a new tab', async ({ page }) => {
   await newTab.waitForLoadState();
   await expect(newTab).toHaveURL('https://www.pavantestingtools.com/');
   
-  await newTab.waitForTimeout(2000);
 });
 
 test('opens a popup window', async ({ page }) => {
@@ -78,3 +82,4 @@ test('opens a popup window', async ({ page }) => {
 
 });
 });
+

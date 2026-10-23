@@ -10,7 +10,11 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-
+test('Page load and browser validation', async ({ page, browserName }) => {
+  // Validate the page title and URL.
+  await expect(page).toHaveTitle('Automation Testing Practice');
+  await expect(page).toHaveURL(practiceSite); 
+});
 
 
 test('verifies the page title and header', async ({ page }) => {
@@ -331,7 +335,7 @@ test('demonstrates soft assertions', async ({ page }) => {
   await expect.soft(page.locator('#Blog1 h3')).toContainText('Data Entry Form');
   await expect.soft(nameInput).toBeVisible();
 });
-
+ 
 test('demonstrates auto-wait, explicit wait, and custom polling', async ({ page }) => {
   const toggleButton = page.locator('button[name="start"], button[name="stop"]');
 
@@ -361,6 +365,7 @@ test('custom polling example: waits for a specific text to appear', async ({ pag
   await expect(async () => {
     
   const count = await page.locator(".item").count(); //6
+  
   expect(count).toBeGreaterThan(5);
 
 }).toPass({ timeout: 10_000 });
@@ -376,12 +381,22 @@ await expect(async () => {
 
 
 });
-
+  
 test('reads text inside an iframe', async ({ page }) => {
   await page.setContent(`
     <iframe id="my-frame" srcdoc="<h1>Hello from the iframe</h1>"></iframe>
   `);
 
+
+
   const iframe = page.frameLocator('#my-frame');
   await expect(iframe.getByRole('heading')).toHaveText('Hello from the iframe');
 });
+
+
+
+
+
+
+
+
