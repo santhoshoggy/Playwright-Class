@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
