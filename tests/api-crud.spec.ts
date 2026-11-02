@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const apiUrl = "https://jsonplaceholder.typicode.com";
 
 test.describe("Posts API", () => {
-  test("GET retrieves a post", async ({ request }) => {
+  test("GET retrieves a post", async ({ page,request }) => {
     const response = await request.get(`${apiUrl}/posts/1`);
 
     expect(response.status()).toBe(200);
@@ -13,12 +13,40 @@ test.describe("Posts API", () => {
     console.log(post);
   });
 
+  /*
+
+  200 - ok
+  201 - created
+  204 - no content
+  400 - bad request
+  401 - unauthorized
+  403 - forbidden
+  404 - not found
+  500 - internal server error
+
+  methods:
+   GET, POST, PUT, PATCH, DELETE
+
+  JSON :
+  {
+    "userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+  }
+
+
+  
+
+*/
+
   test("POST creates a post", async ({ request }) => {
     const response = await request.post(`${apiUrl}/posts`, {
       data: {
+         userId: 1,
         title: "Playwright API test",
         body: "Created with a POST request",
-        userId: 1,
+       
       },
     });
 
@@ -43,7 +71,7 @@ test.describe("Posts API", () => {
     expect(response.status()).toBe(200);
     await expect(response).toBeOK();
 
-    console.log(response);
+    console.log(await response.json());
   });
 
   test("PATCH updates part of a post", async ({ request }) => {
