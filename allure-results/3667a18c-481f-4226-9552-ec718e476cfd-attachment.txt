@@ -1,4 +1,0 @@
-Row 0: BookName
-Row 1: Author
-Row 2: Subject
-Row 3: Price

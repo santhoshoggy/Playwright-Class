@@ -1,6 +1,0 @@
-{
-  userId: 1,
-  title: 'Playwright API test',
-  body: 'Created with a POST request',
-  id: 101
-}
