@@ -1,0 +1,6 @@
+{
+  id: 1,
+  title: 'Replaced by Playwright',
+  body: 'Updated with a PUT request',
+  userId: 1
+}
