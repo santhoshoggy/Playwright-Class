@@ -43,6 +43,7 @@ test.describe("Posts API", () => {
   test("POST creates a post", async ({ request }) => {
     const response = await request.post(`${apiUrl}/posts`, {
       data: {
+        
          userId: 1,
         title: "Playwright API test",
         body: "Created with a POST request",
