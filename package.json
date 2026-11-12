@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "node -e \"require('node:fs').rmSync('allure-results', { recursive: true, force: true })\" && playwright test",
+    "allure:generate": "allure generate allure-results --clean --output allure-report",
+    "allure:open": "allure open allure-report"
+  },
   "keywords": [],
   "type": "commonjs",
   "devDependencies": {

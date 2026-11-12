@@ -1,1 +1,1 @@
-{"uid":"b1a8273437954620fa374b796ffaacdd","name":"behaviors","children":[]}
+{"uid":"b1a8273437954620fa374b796ffaacdd","name":"behaviors","children":[{"name":"logs in to SauceDemo using the login page fixture","uid":"a983d31a354aa61d","parentUid":"b1a8273437954620fa374b796ffaacdd","status":"passed","time":{"start":1794462636301,"stop":1794462638390,"duration":2089},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":0,"retriesStatusChange":false,"parameters":["chromium"],"tags":[]}]}

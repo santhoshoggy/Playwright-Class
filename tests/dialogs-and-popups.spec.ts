@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const practiceSite = 'https://testautomationpractice.blogspot.com/';
 
-
+//sample test to handle the alert, confirmation and prompt popups in the browser
 test.describe('Dialogs and Popups', () => {
 test('handles the simple alert', async ({ page }) => {
   await page.goto(practiceSite);

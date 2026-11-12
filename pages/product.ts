@@ -6,7 +6,10 @@ export class ProductPage extends LoginPage {
   readonly productLink: Locator;
   readonly logoutButton: Locator;
   readonly openMenuButton: Locator;
- 
+  //  readonly productTitle: Locator;
+  // readonly productLink: Locator;
+  // readonly logoutButton: Locator;
+  // readonly openMenuButton: Locator;
 
   constructor(page: any) {
     super(page);
