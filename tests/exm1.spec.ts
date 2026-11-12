@@ -19,7 +19,7 @@ test('Page load and browser validation', async ({ page, browserName }) => {
 
 test('verifies the page title and header', async ({ page }) => {
 
-
+//sample line 2
   await expect(page).toHaveTitle('Automation Testing Practice');
   await expect(page.locator('h1')).toContainText('Automation Testing Practice');
   await expect(page).toHaveURL("https://testautomationpractice.blogspot.com/");
