@@ -26,6 +26,7 @@ test('verifies the page title and header', async ({ page }) => {
   await expect(page).toHaveURL(/testautomationpractice/);
   await expect(page).not.toHaveURL(/google/);
   await page.waitForTimeout(3000);
+  //chages...
   console.log('Page title and header verified successfully.');
 });
 
